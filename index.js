@@ -35,10 +35,7 @@ module.exports = function(url, callback) {
 
       while (match = link_re.exec(body)) {
         if (rel_re.test(match[1]) && (ico_match = href_re.exec(match[1]))) {
-          ico = ico_match[1];
-          if (ico[0] == "/") {
-            ico = root + ico;
-          }
+          ico = Url.resolve(res.request.href, ico_match[1]);
           return callback(null, ico);
         }
       }
