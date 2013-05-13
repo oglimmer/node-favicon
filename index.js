@@ -21,9 +21,9 @@ module.exports = function(url, callback) {
     , ico  = root + "/favicon.ico";
 
   // Check the root of the web site.
-  does_it_render(ico, function(err, renders) {
+  does_it_render(ico, function(err, renders, url) {
     if (err) return callback(err);
-    if (renders) return callback(null, ico);
+    if (renders) return callback(null, url);
 
     // Check for <link rel="icon" href="???"> tags to indicate
     // the location of the favicon.
@@ -54,7 +54,7 @@ module.exports = function(url, callback) {
 function does_it_render(url, callback) {
   request(url, function(err, res, body) {
     if (err) return callback(err);
-    callback(null, res.statusCode == 200);
+    callback(null, res.statusCode == 200, res.request.href);
   });
 }
 

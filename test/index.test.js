@@ -33,4 +33,12 @@ describe("favicon", function() {
       done();
     });
   });
+
+  it("will follow redirect from http to https", function(done) {
+    favicon("http://github.com/", function(err, url) {
+      if (err) return done(err);
+      url.should.eql("https://github.com/favicon.ico")
+      done();
+    });
+  });
 });
