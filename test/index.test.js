@@ -41,4 +41,16 @@ describe("favicon", function() {
       done();
     });
   });
+
+  // 1. http://www.rai.nl => http://www.rai.nl/nl/pages/default.aspx
+  // 2. href found === ../../_catalogs/masterpage/img/favicon.png
+  // 3. resolves to http://www.rai.nl/_catalogs/masterpage/img/favicon.png
+  it("it will follow redirect and resolve url from link", function(done) {
+    favicon("http://www.rai.nl/", function(err, url) {
+      if (err) return done(err);
+      url.should.eql("http://www.rai.nl/_catalogs/masterpage/img/favicon.png")
+      done();
+    });
+  });
+
 });
