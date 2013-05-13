@@ -10,7 +10,9 @@
   { "name": "sentientwaffle"
   , "url":  "http://sentientwaffle.github.com/"
   }
-
+, "contributors": [
+    "Gilles Wittenberg (http://www.gilleswittenberg.com/)"
+]
 , "main": "./index"
 , "scripts":
   { "test": "mocha"
