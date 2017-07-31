@@ -15,19 +15,24 @@ var request = require('request')
 //   });
 //
 // Returns Nothing.
-module.exports = function(url, callback) {
+module.exports = function(url, options, callback) {
+  if (typeof callback === 'undefined') {
+    callback = options;
+    options = {};
+  }
+
   var p    = Url.parse(url)
     , root = p.protocol + "//" + p.host
     , ico  = root + "/favicon.ico";
 
   // Check the root of the web site.
-  does_it_render(ico, function(err, renders, url) {
+  does_it_render(ico, options, function(err, renders, url) {
     if (err) return callback(err);
     if (renders) return callback(null, url);
 
     // Check for <link rel="icon" href="???"> tags to indicate
     // the location of the favicon.
-    request(root, function(err, res, body) {
+    request(root, options, function(err, res, body) {
       var link_re = /<link (.*)>/gi
         , rel_re  = /rel=["'][^"]*icon[^"']*["']/i
         , href_re = /href=["']([^"']*)["']/i
@@ -48,8 +53,8 @@ module.exports = function(url, callback) {
 
 
 // Internal: Check the status code.
-function does_it_render(url, callback) {
-  request(url, function(err, res, body) {
+function does_it_render(url, options, callback) {
+  request(url, options, function(err, res, body) {
     if (err) return callback(err);
     callback(null, res.statusCode == 200, res.request.href);
   });
