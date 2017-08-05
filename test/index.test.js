@@ -69,4 +69,12 @@ describe("favicon", function() {
       });
     });
   });
+
+  it("will return the right faivon even /favicon.ico returns 200 but isn't an image", function(done) {
+    favicon("https://osxentwicklerforum.de", function(err, url) {
+      if (err) return done(err);
+      url.should.eql("https://osxentwicklerforum.de/wcf/images/favicon.ico")
+      done();
+    });
+  });
 });
