@@ -56,7 +56,7 @@ module.exports = function(url, options, callback) {
 function does_it_render(url, options, callback) {
   request(url, options, function(err, res, body) {
     if (err) return callback(err);
-    var contentType = res.headers['content-type'];
+    var contentType = res.headers['content-type'] || '';
     callback(
       null,
       res.statusCode === 200 && contentType.indexOf('image/') === 0,
